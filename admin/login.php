@@ -8,16 +8,16 @@ if (isset($_SESSION['user_id'])) {
 //login admin
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
-    $email = filter_var($email, FILTER_SANITIZE_STRING);
+    $email = filter_var($email, FILTER_SANITIZE_SPECIAL_CHARS);
     $pass = $_POST['password'];
-    $pass = filter_var($pass, FILTER_SANITIZE_STRING);
+    $pass = filter_var($pass, FILTER_SANITIZE_SPECIAL_CHARS);
 
     $select_admin = $conn->prepare("SELECT * FROM `admin` WHERE email = ? AND password = ?");
     $select_admin->execute([$email, $pass]);
 
     if ($select_admin->rowCount() > 0) {
-        $fetch_admin_id=$select_admin->fetch(PDO::FETCH_ASSOC);
-        $_SESSION['admin_id']=$fetch_admin_id['id'];
+        $fetch_admin_id = $select_admin->fetch(PDO::FETCH_ASSOC);
+        $_SESSION['admin_id'] = $fetch_admin_id['id'];
         header('location: dashboard.php');
     } else {
         $warning_msg[] = 'incorrect username or password';

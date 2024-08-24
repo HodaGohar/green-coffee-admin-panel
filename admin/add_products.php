@@ -12,20 +12,20 @@ if (!isset($admin_id)) {
 //add product in database
 
 if (isset($_POST['publish'])) {
-    $id = uniqid();
+    // $id = uniqid();
 
     $name = $_POST['name'];
-    $name = filter_var($name, FILTER_SANITIZE_STRING);
+    $name = filter_var($name, FILTER_SANITIZE_SPECIAL_CHARS);
 
     $price = $_POST['price'];
-    $price = filter_var($price, FILTER_SANITIZE_STRING);
+    $price = filter_var($price, FILTER_SANITIZE_SPECIAL_CHARS);
 
     $content = $_POST['content'];
-    $content = filter_var($content, FILTER_SANITIZE_STRING);
+    $content = filter_var($content, FILTER_SANITIZE_SPECIAL_CHARS);
 
     $status = 'active';
     $image = $_FILES['image']['name'];
-    $image = filter_var($image, FILTER_SANITIZE_STRING);
+    $image = filter_var($image, FILTER_SANITIZE_SPECIAL_CHARS);
     $image_size = $_FILES['image']['size'];
     $image_tmp_name = $_FILES['image']['tmp_name'];
     $image_folder = '../image/' . $image;
@@ -45,11 +45,11 @@ if (isset($_POST['publish'])) {
     } else {
         $image = '';
     }
-    if ($select_image->rowcount() > 0 AND $image != '') {
+    if ($select_image->rowcount() > 0 and $image != '') {
         $warning_msg[] = 'please rename your image';
     } else {
-        $insert_product = $conn->prepare("INSERT INTO `products`(id, name, price, image, product_detail, status) VALUES(?,?,?,?,?,?)");
-        $insert_product->execute([$id, $name, $price, $image, $content, $status]);
+        $insert_product = $conn->prepare("INSERT INTO `products`( name, price, image, product_detail, status) VALUES(?,?,?,?,?)");
+        $insert_product->execute([ $name, $price, $image, $content, $status]);
         $success_msg[] = 'product inserted successfully!';
     }
 }
@@ -61,18 +61,18 @@ if (isset($_POST['draft'])) {
     $id = uniqid();
 
     $name = $_POST['name'];
-    $name = filter_var($name, FILTER_SANITIZE_STRING);
+    $name = filter_var($name, FILTER_SANITIZE_SPECIAL_CHARS);
 
     $price = $_POST['price'];
-    $price = filter_var($price, FILTER_SANITIZE_STRING);
+    $price = filter_var($price, FILTER_SANITIZE_SPECIAL_CHARS);
 
     $content = $_POST['content'];
-    $content = filter_var($content, FILTER_SANITIZE_STRING);
+    $content = filter_var($content, FILTER_SANITIZE_SPECIAL_CHARS);
 
     $status = 'deactive';
 
     $image = $_FILES['image']['name'];
-    $image = filter_var($image, FILTER_SANITIZE_STRING);
+    $image = filter_var($image, FILTER_SANITIZE_SPECIAL_CHARS);
     $image_size = $_FILES['image']['size'];
     $image_tmp_name = $_FILES['image']['tmp_name'];
     $image_folder = '../image/' . $image;
@@ -91,7 +91,7 @@ if (isset($_POST['draft'])) {
     } else {
         $image = '';
     }
-    if ($select_image->rowcount() > 0 AND $image != '') {
+    if ($select_image->rowcount() > 0 and $image != '') {
         $warning_msg[] = 'please rename your image';
     } else {
         $insert_product = $conn->prepare("INSERT INTO `products`(id, name, price, image, product_detail, status) VALUES(?,?,?,?,?,?)");

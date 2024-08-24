@@ -7,17 +7,17 @@ if (isset($_SESSION['user_id'])) {
 }
 //register user
 if (isset($_POST['register'])) {
-    $id = unique_id();
+    // $id = unique_id();
     $name = $_POST['name'];
-    $name = filter_var($name, FILTER_SANITIZE_STRING);
+    $name = filter_var($name, FILTER_SANITIZE_SPECIAL_CHARS);
     $email = $_POST['email'];
-    $email = filter_var($email, FILTER_SANITIZE_STRING);
+    $email = filter_var($email, FILTER_SANITIZE_SPECIAL_CHARS);
     $pass = $_POST['password'];
-    $pass = filter_var($pass, FILTER_SANITIZE_STRING);
+    $pass = filter_var($pass, FILTER_SANITIZE_SPECIAL_CHARS);
     $cpass = $_POST['cpass'];
-    $cpass = filter_var($cpass, FILTER_SANITIZE_STRING);
+    $cpass = filter_var($cpass, FILTER_SANITIZE_SPECIAL_CHARS);
     $image = $_FILES['image']['name'];
-    $image = filter_var($image, FILTER_SANITIZE_STRING);
+    $image = filter_var($image, FILTER_SANITIZE_SPECIAL_CHARS);
     $image_tmp_name = $_FILES['image']['tmp_name'];
     $image_folder = '../img' . $image;
 
@@ -31,8 +31,8 @@ if (isset($_POST['register'])) {
         if ($pass != $cpass) {
             $warning_msg[] = 'confirm password not matched';
         } else {
-            $insert_admin = $conn->prepare("INSERT INTO `admin`(id,name,email,password,profile) VALUES(?,?,?,?,?)");
-            $insert_admin->execute([$id, $name, $email, $pass, $image]);
+            $insert_admin = $conn->prepare("INSERT INTO `admin`(name,email,password,profile) VALUES(?,?,?,?)");
+            $insert_admin->execute([ $name, $email, $pass, $image]);
             move_uploaded_file($image_tmp_name, $image_folder);
             $success_msg[] = 'New Admin Register';
         }

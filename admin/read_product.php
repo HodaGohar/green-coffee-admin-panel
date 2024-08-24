@@ -14,7 +14,7 @@ $get_id = $_GET['post_id'];
 if (isset($_POST['delete'])) {
 
     $p_id = $_POST['product_id'];
-    $p_id = filter_var($p_id, FILTER_SANITIZE_STRING);
+    $p_id = filter_var($p_id, FILTER_SANITIZE_SPECIAL_CHARS);
 
     $delete_image = $conn->prepare("SELECT * FROM 'product' WHERE id= ?");
     $delete_image->execute(['$p_id']);

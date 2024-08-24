@@ -58,7 +58,7 @@ if (!isset($admin_id)) {
                     ?>
                     <h3><?= $num_of_active_products; ?></h3>
                     <p>total active products</p>
-                    <a href="view_product.php" class="btn">view active products</a>
+                    <a href="active_product.php" class="btn">view active products</a>
                 </div>
                 <div class="box">
                     <?php
@@ -68,7 +68,7 @@ if (!isset($admin_id)) {
                     ?>
                     <h3><?= $num_of_deactive_products; ?></h3>
                     <p>total deactive products</p>
-                    <a href="view_product.php" class="btn">view deactive products</a>
+                    <a href="deactive_product.php" class="btn">view deactive products</a>
                 </div>
                 <div class="box">
                     <?php
@@ -78,7 +78,7 @@ if (!isset($admin_id)) {
                     ?>
                     <h3><?= $num_of_users; ?></h3>
                     <p>registered users</p>
-                    <a href="accounts.php" class="btn">view users</a>
+                    <a href="user_account.php" class="btn">view users</a>
                 </div>
                 <div class="box">
                     <?php
@@ -88,7 +88,7 @@ if (!isset($admin_id)) {
                     ?>
                     <h3><?= $num_of_admin; ?></h3>
                     <p>registered admin</p>
-                    <a href="accounts.php" class="btn">view admin</a>
+                    <a href="user_account.php" class="btn">view admin</a>
                 </div>
                 <div class="box">
                     <?php
@@ -118,7 +118,7 @@ if (!isset($admin_id)) {
                     ?>
                     <h3><?= $num_of_confirm_orders; ?></h3>
                     <p>total confirm orders</p>
-                    <a href="order.php" class="btn">view confirm orders</a>
+                    <a href="confirm_order.php" class="btn">view confirm orders</a>
                 </div>
                 <div class="box">
                     <?php
@@ -128,7 +128,7 @@ if (!isset($admin_id)) {
                     ?>
                     <h3><?= $num_of_canceled_orders; ?></h3>
                     <p>total canceled orders</p>
-                    <a href="order.php" class="btn">view canceled orders</a>
+                    <a href="cancled_order.php" class="btn">view canceled orders</a>
                 </div>
             </div>
         </section>

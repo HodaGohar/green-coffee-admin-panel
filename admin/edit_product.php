@@ -14,16 +14,16 @@ if (isset($_POST['update'])) {
     $post_id = $_GET['id'];
 
     $name = $_POST['name'];
-    $name = filter_var($name, FILTER_SANITIZE_STRING);
+    $name = filter_var($name, FILTER_SANITIZE_SPECIAL_CHARS);
 
     $price = $_POST['price'];
-    $price = filter_var($price, FILTER_SANITIZE_STRING);
+    $price = filter_var($price, FILTER_SANITIZE_SPECIAL_CHARS);
 
     $content = $_POST['content'];
-    $content = filter_var($content, FILTER_SANITIZE_STRING);
-    
-    $status = $_POST['status'];
-    $status = filter_var($status, FILTER_SANITIZE_STRING);
+    $content = filter_var($content, FILTER_SANITIZE_SPECIAL_CHARS);
+
+    $status = $_POST['status'] ?? null ;
+    $status = filter_var($status, FILTER_SANITIZE_SPECIAL_CHARS);
 
     //update product 
     $update_product = $conn->prepare("UPDATE `products` SET name = ?, price = ?, product_detail = ?, status = ? WHERE id = ?");
@@ -33,10 +33,10 @@ if (isset($_POST['update'])) {
 
     $old_image = $_POST['old_image'];
     $image = $_FILES['image']['name'];
-    $image = filter_var($image, FILTER_SANITIZE_STRING);
+    $image = filter_var($image, FILTER_SANITIZE_SPECIAL_CHARS);
     $image_size = $_FILES['image']['size'];
     $image_tmp_name = $_FILES['image']['tmp_name'];
-    $image_folder = '../image/' .$image;
+    $image_folder = '../image/' . $image;
 
     $select_image = $conn->prepare("SELECT * FROM `products` WHERE image = ?");
     $select_image->execute([$image]);
@@ -51,8 +51,8 @@ if (isset($_POST['update'])) {
             $update_image->execute([$image, $post_id]);
             move_uploaded_file($image_tmp_name, $image_folder);
 
-            if ($old_image != $image AND $old_image != '') {
-                unlink('../image/' .$old_image);
+            if ($old_image != $image and $old_image != '') {
+                unlink('../image/' . $old_image);
             }
             $success_msg[] = 'image update';
         }
@@ -64,9 +64,9 @@ if (isset($_POST['update'])) {
 if (isset($_POST['delete'])) {
 
     $p_id = $_POST['product_id'];
-    $p_id = filter_var($p_id, FILTER_SANITIZE_STRING);
+    $p_id = filter_var($p_id, FILTER_SANITIZE_SPECIAL_CHARS);
 
-    $delete_image = $conn->prepare("SELECT * FROM `product` WHERE id= ?");
+    $delete_image = $conn->prepare("SELECT * FROM `products` WHERE id= ?");
     $delete_image->execute(['$p_id']);
 
     $fetch_delete_image = $delete_image->fetch(PDO::FETCH_ASSOC);
@@ -122,18 +122,18 @@ if (isset($_POST['delete'])) {
                                     <div class="input-field">
                                         <label>update status</label>
                                         <select name="status">
-                                            <option selected disabled value="<?= $fetch_product['status']?>"><?= $fetch_product['status'] ?></option>
+                                            <option selected disabled value="<?= $fetch_product['status'] ?>"><?= $fetch_product['status'] ?></option>
                                             <option value="active">active</option>
                                             <option value="deactive">deactive</option>
                                         </select>
                                     </div>
                                     <div class="input-field">
                                         <label>product name</label>
-                                        <input type="text" name="name" value="<?= $fetch_product['name']?>">
+                                        <input type="text" name="name" value="<?= $fetch_product['name'] ?>">
                                     </div>
                                     <div class="input-field">
                                         <label>product price</label>
-                                        <input type="number" name="price" value="<?= $fetch_product['price']?>">
+                                        <input type="number" name="price" value="<?= $fetch_product['price'] ?>">
                                     </div>
 
                                     <div class="input-field">
